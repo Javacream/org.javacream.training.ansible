@@ -1,0 +1,25 @@
+---
+- name: Beispielkonfiguration der Webserver
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Apache installieren
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+        update_cache: true
+
+    - name: Apache starten und aktivieren
+      ansible.builtin.systemd_service:
+        name: apache2
+        state: started
+        enabled: true
+
+    - name: Individuelle Startseite schreiben
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        content: |
+          Ansible Training
+          Host: {{ inventory_hostname }}
+        mode: "0644"
