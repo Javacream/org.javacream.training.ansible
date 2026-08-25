@@ -1,0 +1,18 @@
+services:
+  control:
+    build:
+      context: .
+      dockerfile: Dockerfile.control
+    container_name: ansible-control
+    hostname: control
+    working_dir: /training
+    volumes:
+      - ./training:/training
+    networks:
+      - ansible-training
+    stdin_open: true
+    tty: true
+
+networks:
+  ansible-training:
+    name: ansible-training

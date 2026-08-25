@@ -1,0 +1,42 @@
+FROM ubuntu:24.04
+
+ENV container=docker
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        systemd \
+        systemd-sysv \
+        openssh-server \
+        sudo \
+        python3 \
+        curl \
+        ca-certificates \
+        iproute2 \
+        iputils-ping \
+        procps \
+        vim-tiny && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Trainingsbenutzer für Ansible.
+RUN useradd --create-home --shell /bin/bash ansible && \
+    echo "ansible:ansible" | chpasswd && \
+    usermod -aG sudo ansible && \
+    printf 'ansible ALL=(ALL) NOPASSWD:ALL\n' > /etc/sudoers.d/ansible && \
+    chmod 0440 /etc/sudoers.d/ansible
+
+# SSH-Key der Control Node autorisieren.
+COPY ssh/id_ed25519.pub /tmp/id_ed25519.pub
+RUN install -d -m 0700 -o ansible -g ansible /home/ansible/.ssh && \
+    install -m 0600 -o ansible -g ansible /tmp/id_ed25519.pub /home/ansible/.ssh/authorized_keys && \
+    rm /tmp/id_ed25519.pub
+
+# SSH-Daemon aktivieren. Der Dienst wird später durch systemd gestartet.
+RUN systemctl enable ssh
+
+# Jeder Container soll beim Start eine eigene machine-id erhalten können.
+RUN rm -f /etc/machine-id && touch /etc/machine-id
+
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]

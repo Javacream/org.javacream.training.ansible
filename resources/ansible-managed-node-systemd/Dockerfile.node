@@ -1,0 +1,48 @@
+FROM ubuntu:24.04
+
+ENV container=docker
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        systemd \
+        systemd-sysv \
+        dbus \
+        openssh-server \
+        sudo \
+        python3 \
+        ca-certificates \
+        curl \
+        iproute2 \
+        iputils-ping \
+        procps \
+        vim-tiny && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home --shell /bin/bash ansible && \
+    echo "ansible:ansible" | chpasswd && \
+    usermod -aG sudo ansible && \
+    printf 'ansible ALL=(ALL) NOPASSWD:ALL\n' > /etc/sudoers.d/ansible && \
+    chmod 0440 /etc/sudoers.d/ansible
+
+RUN mkdir -p /run/sshd && \
+    sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    printf '\nPermitRootLogin no\n' >> /etc/ssh/sshd_config
+
+RUN systemctl enable ssh
+
+# Container-untypische Units deaktivieren bzw. maskieren.
+RUN systemctl mask \
+      dev-hugepages.mount \
+      sys-fs-fuse-connections.mount \
+      systemd-remount-fs.service \
+      getty.target \
+      console-getty.service || true
+
+# machine-id beim ersten Start sauber erzeugen lassen
+RUN rm -f /etc/machine-id && touch /etc/machine-id
+
+STOPSIGNAL SIGRTMIN+3
+
+CMD ["/sbin/init"]

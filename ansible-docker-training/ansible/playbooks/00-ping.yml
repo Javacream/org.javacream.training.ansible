@@ -1,0 +1,8 @@
+---
+- name: Verbindung zu allen Trainingsknoten testen
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Ansible-Ping ausführen
+      ansible.builtin.ping:

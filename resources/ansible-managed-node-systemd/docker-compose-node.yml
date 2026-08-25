@@ -1,0 +1,30 @@
+services:
+  node1:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: ansible-node2
+    hostname: node2
+
+    privileged: true
+
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+    stop_signal: SIGRTMIN+3
+
+    networks:
+      - ansible-training
+
+    ports:
+      - "2223:22"
+
+networks:
+  ansible-training:
+    external: true
+    name: ansible-training

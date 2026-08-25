@@ -1,0 +1,16 @@
+services:
+  node1:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: ansible-node1
+    hostname: node1
+    networks:
+      - ansible-training
+    ports:
+      - "2222:22"
+
+networks:
+  ansible-training:
+    external: true
+    name: ansible-training
