@@ -17,6 +17,8 @@ services:
       - web2
       - db1
       - misc1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   web1:
     build:
