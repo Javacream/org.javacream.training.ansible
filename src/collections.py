@@ -22,3 +22,15 @@ from_1_to_3 = range(1,4)
 for number in from_1_to_3:
     print(number)
 
+print("__________________________")
+List_length = len(hostnames_list) # Beispiel für einen prozeduralen Programmirstil
+print(List_length)
+
+hostnames_list.append("db2") # Beispiel für einen Objektorientierten Programmierstil
+print(hostnames_list)
+
+
+text = "Hello World"
+print(len(text))
+
+print(text.count("llo"))
