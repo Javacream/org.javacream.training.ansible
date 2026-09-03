@@ -1,8 +1,24 @@
-hostname1 = "web1"
-hostname2 = "web2"
-hostname3 = "db1"
+hostnames_list = ["web1", "web2", "db1", "web1"]
+
+# Ausgabe der gesamten Liste
+print(hostnames_list)
+
+# Indexzugriff
+print(hostnames_list[1])
+
+#Iteration
+for hostname in hostnames_list:
+    print(hostname)
+print("Hugo")
+
+hostnames_set = {"web1", "web2", "db1", "web1"}
+print(hostnames_set)
+#print(hostnames_set[1])
+for hostname in hostnames_set:
+    print(hostname)
 
 
-print(hostname1)
-print(hostname2)
-print(hostname3)
+from_1_to_3 = range(1,4)
+for number in from_1_to_3:
+    print(number)
+
