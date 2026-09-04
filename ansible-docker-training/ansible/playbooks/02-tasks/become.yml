@@ -1,0 +1,24 @@
+---
+- name: Kommando mit erhöhten Rechten ausführen
+  hosts: db1
+
+  tasks:
+    - name: Inhalt von /etc/shadow ohne become lesen
+      ansible.builtin.shell:
+        cmd: head -n 1 /etc/shadow
+      register: without_become
+      ignore_errors: true
+
+    - name: Ergebnis ohne become anzeigen
+      ansible.builtin.debug:
+        var: without_become.stderr
+
+    - name: Inhalt von /etc/shadow mit become lesen
+      become: true
+      ansible.builtin.shell:
+        cmd: head -n 1 /etc/shadow
+      register: with_become
+
+    - name: Ergebnis mit become anzeigen
+      ansible.builtin.debug:
+        var: with_become.stdout

@@ -1,0 +1,14 @@
+---
+- name: Shell-Skript auf db1 ausführen
+  hosts: db1
+
+  tasks:
+    - name: Shell-Skript auf den Managed Node kopieren
+      ansible.builtin.copy:
+        src: change_directory.sh
+        dest: /tmp/change_directory.sh
+        mode: "0755"
+
+    - name: Shell-Skript ausführen
+      ansible.builtin.command:
+        cmd: /tmp/change_directory.sh

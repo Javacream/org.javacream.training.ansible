@@ -1,0 +1,19 @@
+---
+- name: Python-Skript abhängig vom Hostnamen ausführen
+  hosts: all
+
+  tasks:
+    - name: Python-Skript auf die Managed Nodes kopieren
+      ansible.builtin.copy:
+        src: parameterized_pong.py
+        dest: /tmp/parameterized_pong.py
+        mode: "0755"
+
+    - name: Python-Skript nur auf db1 mehrfach ausführen
+      ansible.builtin.command:
+        cmd: /tmp/parameterized_pong.py {{ item }}
+      loop:
+        - Linux
+        - Python
+        - Ansible
+      when: ansible_facts['hostname'] == 'db1'

@@ -1,0 +1,17 @@
+---
+- name: Tags verwenden
+  hosts: all
+
+  tasks:
+    - name: Systeminformationen anzeigen
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['distribution'] }}"
+      tags:
+        - info
+
+    - name: Testdatei anlegen
+      ansible.builtin.file:
+        path: /tmp/tag-demo
+        state: touch
+      tags:
+        - configure

@@ -1,0 +1,29 @@
+---
+- name: Einfache Jinja-Ausdrücke verwenden
+  hosts: all
+
+  vars:
+    name: Hugo
+    number1: 10
+    number2: 5
+
+  tasks:
+    - name: Variable ausgeben
+      ansible.builtin.debug:
+        msg: "{{ name }}"
+
+    - name: Mathematischen Ausdruck auswerten
+      ansible.builtin.debug:
+        msg: "{{ number1 + number2 }}"
+
+    - name: Zeichenkette zusammensetzen
+      ansible.builtin.debug:
+        msg: "Hallo {{ name }}"
+
+    - name: Filter verwenden
+      ansible.builtin.debug:
+        msg: "{{ name | upper }}"
+
+    - name: Hostname ausgeben
+      ansible.builtin.debug:
+        msg: "My name is {{ ansible_facts['hostname'] }}"

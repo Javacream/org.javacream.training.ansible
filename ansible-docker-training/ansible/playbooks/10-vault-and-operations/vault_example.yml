@@ -1,0 +1,11 @@
+---
+- name: Variable aus einer Vault-Datei verwenden
+  hosts: all
+
+  vars_files:
+    - secret_vars.yml
+
+  tasks:
+    - name: Verwendung einer geheimen Variable demonstrieren
+      ansible.builtin.debug:
+        msg: "Secret variable is available"

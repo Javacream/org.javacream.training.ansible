@@ -1,0 +1,14 @@
+---
+- name: Bestimmte Version von nginx installieren
+  hosts: all
+  become: true
+
+  vars_files:
+    - nginx_vars.yml
+
+  tasks:
+    - name: nginx in der gewünschten Version installieren
+      ansible.builtin.apt:
+        name: "nginx={{ nginx_version }}"
+        state: present
+        update_cache: true

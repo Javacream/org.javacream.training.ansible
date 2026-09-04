@@ -1,0 +1,16 @@
+---
+- name: Variablen verwenden
+  hosts: all
+
+  vars:
+    name: Hugo
+    number: 42
+
+  tasks:
+    - name: Zeichenkette ausgeben
+      ansible.builtin.debug:
+        msg: "Name: {{ name }}"
+
+    - name: Zahl ausgeben
+      ansible.builtin.debug:
+        msg: "Number: {{ number }}"

@@ -1,0 +1,19 @@
+---
+- name: Parametrisiertes Python-Skript auf db1 ausführen
+  hosts: db1
+
+  tasks:
+    - name: Python-Skript auf den Managed Node kopieren
+      ansible.builtin.copy:
+        src: parameterized_pong.py
+        dest: /tmp/parameterized_pong.py
+        mode: "0755"
+
+    - name: Python-Skript mit Parameter ausführen
+      ansible.builtin.command:
+        cmd: /tmp/parameterized_pong.py Ansible
+      register: script_result
+
+    - name: Ausgabe des Python-Skripts anzeigen
+      ansible.builtin.debug:
+        var: script_result.stdout

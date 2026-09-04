@@ -1,0 +1,3 @@
+name: Hugo
+port: 8080
+environment: development

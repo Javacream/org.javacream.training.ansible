@@ -1,0 +1,53 @@
+---
+- name: Komplexere Jinja-Filter verwenden
+  hosts: all
+
+  vars:
+    numbers:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+
+    names:
+      - Hugo
+      - Anna
+      - Bernd
+
+    users:
+      - name: Hugo
+        age: 42
+      - name: Anna
+        age: 35
+      - name: Bernd
+        age: 28
+
+    data:
+      project: Ansible
+      level: beginner
+
+  tasks:
+    - name: Nur ungerade Zahlen auswählen
+      ansible.builtin.debug:
+        msg: "{{ numbers | select('odd') | list }}"
+
+    - name: Namen sortieren
+      ansible.builtin.debug:
+        msg: "{{ names | sort }}"
+
+    - name: Namen aus einer Liste von Dictionaries extrahieren
+      ansible.builtin.debug:
+        msg: "{{ users | map(attribute='name') | list }}"
+
+    - name: Daten als JSON ausgeben
+      ansible.builtin.debug:
+        msg: "{{ data | to_json }}"
+
+    - name: Daten als YAML ausgeben
+      ansible.builtin.debug:
+        msg: "{{ data | to_yaml }}"
+
+    - name: Default-Wert verwenden
+      ansible.builtin.debug:
+        msg: "{{ username | default('unknown') }}"

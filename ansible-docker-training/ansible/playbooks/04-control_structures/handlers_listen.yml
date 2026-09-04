@@ -1,0 +1,21 @@
+---
+- name: Mehrere Handler mit listen verwenden
+  hosts: all
+
+  tasks:
+    - name: Konfigurationsdatei kopieren
+      ansible.builtin.copy:
+        content: "example configuration\n"
+        dest: /tmp/example.conf
+      notify: configuration changed
+
+  handlers:
+    - name: Meldung ausgeben
+      ansible.builtin.debug:
+        msg: "Configuration changed"
+      listen: configuration changed
+
+    - name: Weitere Aktion ausführen
+      ansible.builtin.debug:
+        msg: "Another reaction"
+      listen: configuration changed

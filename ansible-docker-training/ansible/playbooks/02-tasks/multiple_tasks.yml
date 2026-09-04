@@ -1,0 +1,11 @@
+---
+- name: Mehrere Tasks auf db1 ausführen
+  hosts: db1
+
+  tasks:
+    - name: Verbindung testen
+      ansible.builtin.ping:
+
+    - name: Datei anlegen
+      ansible.builtin.command:
+        cmd: touch new_file.txt
