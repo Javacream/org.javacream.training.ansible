@@ -3,7 +3,7 @@
 ## Organisatorisches
 
 * Referent: Rainer Sawitzki, eMail: rainer.sawitzki@gmail.com
-a
+
 * Seminarzeiten
   * 12 Unterrichtseinheiten mit jeweils 90 Minuten
   * Mittwoch 9:00 - 16:15
