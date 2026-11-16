@@ -1,0 +1,21 @@
+---
+- name: systemd-Funktionalität der Managed Nodes prüfen
+  hosts: all
+  become: true
+
+  tasks:
+    - name: SSH-Dienst muss laufen und aktiviert sein
+      ansible.builtin.systemd_service:
+        name: ssh
+        state: started
+        enabled: true
+
+    - name: Status des SSH-Dienstes abfragen
+      ansible.builtin.command:
+        cmd: systemctl is-active ssh
+      register: ssh_status
+      changed_when: false
+
+    - name: Ergebnis anzeigen
+      ansible.builtin.debug:
+        var: ssh_status.stdout

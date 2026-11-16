@@ -1,0 +1,12 @@
+---
+- name: Datei aus einem Jinja-Template erzeugen
+  hosts: all
+
+  vars_files:
+    - variables.yml
+
+  tasks:
+    - name: Template auf dem Managed Node erzeugen
+      ansible.builtin.template:
+        src: application.j2
+        dest: /tmp/application.conf

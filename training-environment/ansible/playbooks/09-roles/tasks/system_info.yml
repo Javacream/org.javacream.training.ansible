@@ -1,0 +1,4 @@
+---
+- name: Betriebssystem anzeigen
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts['distribution'] }}"

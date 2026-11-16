@@ -1,0 +1,23 @@
+---
+- name: Arbeitsverzeichnis für einen Task festlegen
+  hosts: db1
+
+  tasks:
+    - name: Aktuelles Verzeichnis ermitteln
+      ansible.builtin.command:
+        cmd: pwd
+      register: pwd_before
+
+    - name: Aktuelles Verzeichnis ausgeben
+      ansible.builtin.debug:
+        var: pwd_before.stdout
+
+    - name: pwd im übergeordneten Verzeichnis ausführen
+      ansible.builtin.command:
+        cmd: pwd
+        chdir: ..
+      register: pwd_after
+
+    - name: Geändertes Arbeitsverzeichnis ausgeben
+      ansible.builtin.debug:
+        var: pwd_after.stdout

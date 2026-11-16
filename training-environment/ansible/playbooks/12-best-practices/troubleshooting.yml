@@ -1,0 +1,18 @@
+---
+- name: Voraussetzungen prüfen und Informationen ausgeben
+  hosts: all
+
+  vars:
+    application_port: 8080
+
+  tasks:
+    - name: Portnummer prüfen
+      ansible.builtin.assert:
+        that:
+          - application_port > 0
+          - application_port < 65536
+        fail_msg: "application_port muss zwischen 1 und 65535 liegen"
+
+    - name: Hostinformationen anzeigen
+      ansible.builtin.debug:
+        msg: "Host {{ inventory_hostname }} verwendet {{ ansible_facts['distribution'] }}"

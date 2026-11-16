@@ -1,0 +1,13 @@
+---
+- name: Ausgabe eines Kommandos anzeigen
+  hosts: db1
+
+  tasks:
+    - name: Aktuelles Verzeichnis ermitteln
+      ansible.builtin.command:
+        cmd: pwd
+      register: pwd_result
+
+    - name: Aktuelles Verzeichnis ausgeben
+      ansible.builtin.debug:
+        var: pwd_result.stdout

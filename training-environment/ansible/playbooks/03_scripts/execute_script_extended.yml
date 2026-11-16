@@ -1,0 +1,19 @@
+---
+- name: Erweitertes Shell-Skript auf db1 ausführen
+  hosts: db1
+
+  tasks:
+    - name: Shell-Skript auf den Managed Node kopieren
+      ansible.builtin.copy:
+        src: change_directory_extended.sh
+        dest: /tmp/change_directory_extended.sh
+        mode: "0755"
+
+    - name: Shell-Skript ausführen
+      ansible.builtin.command:
+        cmd: /tmp/change_directory_extended.sh
+      register: script_result
+
+    - name: Ausgabe des Shell-Skripts anzeigen
+      ansible.builtin.debug:
+        var: script_result.stdout_lines

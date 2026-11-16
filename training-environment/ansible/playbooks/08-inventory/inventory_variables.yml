@@ -1,0 +1,13 @@
+---
+- name: Variablen aus dem Inventory verwenden
+  hosts: webservers
+
+  tasks:
+    - name: Gruppenvariable anzeigen
+      ansible.builtin.debug:
+        msg: "Port: {{ application_port }}"
+
+    - name: Hostvariable anzeigen
+      ansible.builtin.debug:
+        msg: "Application: {{ application_name }}"
+      when: application_name is defined

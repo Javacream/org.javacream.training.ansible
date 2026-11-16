@@ -1,0 +1,68 @@
+---
+- name: Hostname endet auf 1
+  hosts: all
+
+  tasks:
+    - name: Hostname anzeigen
+      ansible.builtin.debug:
+        var: ansible_facts['hostname']
+      when: ansible_facts['hostname'] is match('.*1$')
+
+- name: Hostname und Distribution prüfen
+  hosts: all
+
+  tasks:
+    - name: Bedingung für db1 und Ubuntu prüfen
+      ansible.builtin.debug:
+        msg: "Host ist db1 und verwendet Ubuntu"
+      when:
+        - ansible_facts['hostname'] == 'db1'
+        - ansible_facts['distribution'] == 'Ubuntu'
+
+- name: Existenz einer Datei prüfen
+  hosts: all
+
+  tasks:
+    - name: Datei prüfen
+      ansible.builtin.stat:
+        path: /tmp/new_file.txt
+      register: file_info
+
+    - name: Meldung ausgeben wenn Datei existiert
+      ansible.builtin.debug:
+        msg: "Die Datei /tmp/new_file.txt existiert"
+      when: file_info.stat.exists
+
+- name: Nichtexistenz einer Datei prüfen
+  hosts: all
+
+  tasks:
+    - name: Datei prüfen
+      ansible.builtin.stat:
+        path: /tmp/new_file.txt
+      register: file_info
+
+    - name: Meldung ausgeben wenn Datei nicht existiert
+      ansible.builtin.debug:
+        msg: "Die Datei /tmp/new_file.txt existiert nicht"
+      when: not file_info.stat.exists
+
+- name: Existenz und Nichtexistenz einer Datei in einem Play prüfen
+  hosts: all
+
+  tasks:
+    - name: Datei prüfen
+      ansible.builtin.stat:
+        path: /tmp/new_file.txt
+      register: file_info
+
+    - name: Meldung ausgeben wenn Datei existiert
+      ansible.builtin.debug:
+        msg: "Die Datei /tmp/new_file.txt existiert"
+      when: file_info.stat.exists
+
+    - name: Meldung ausgeben wenn Datei nicht existiert
+      ansible.builtin.debug:
+        msg: "Die Datei /tmp/new_file.txt existiert nicht"
+      when: not file_info.stat.exists
+

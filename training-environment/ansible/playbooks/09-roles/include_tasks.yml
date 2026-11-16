@@ -1,0 +1,7 @@
+---
+- name: Tasks aus einer Datei einbinden
+  hosts: all
+
+  tasks:
+    - name: Zusätzliche Tasks laden
+      ansible.builtin.include_tasks: tasks/system_info.yml

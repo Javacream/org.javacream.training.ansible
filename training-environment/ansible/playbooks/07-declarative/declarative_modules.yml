@@ -1,0 +1,32 @@
+---
+- name: Deklarative Module verwenden
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Benutzer soll existieren
+      ansible.builtin.user:
+        name: demo
+        state: present
+
+    - name: Verzeichnis soll existieren
+      ansible.builtin.file:
+        path: /tmp/ansible-demo
+        state: directory
+        mode: "0755"
+
+    - name: Datei mit gewünschtem Inhalt bereitstellen
+      ansible.builtin.copy:
+        content: "managed by Ansible\n"
+        dest: /tmp/ansible-demo/info.txt
+        mode: "0644"
+
+    - name: nginx soll installiert sein
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: nginx soll laufen
+      ansible.builtin.service:
+        name: nginx
+        state: started
