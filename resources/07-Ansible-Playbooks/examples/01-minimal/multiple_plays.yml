@@ -1,6 +1,0 @@
----
-- name: Webserver
-  hosts: webservers
-
-- name: Datenbankserver
-  hosts: db1
