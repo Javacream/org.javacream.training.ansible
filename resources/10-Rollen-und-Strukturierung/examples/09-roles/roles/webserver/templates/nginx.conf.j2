@@ -1,0 +1,8 @@
+server {
+    listen {{ webserver_port }};
+    server_name _;
+
+    location / {
+        return 200 "Managed by Ansible\n";
+    }
+}

@@ -1,0 +1,44 @@
+---
+- name: Fehler eines Shell-Kommandos protokollieren
+  hosts: all
+
+  tasks:
+    - name: Nicht existierendes Kommando ausführen
+      ansible.builtin.shell:
+        cmd: non_existent
+      register: command_result
+      ignore_errors: true
+
+- name: Fehlergrund ausgeben
+  hosts: all
+
+  tasks:
+    - name: Nicht existierendes Kommando ausführen
+      ansible.builtin.shell:
+        cmd: non_existent
+      register: command_result
+      ignore_errors: true
+
+    - name: Fehlergrund ausgeben
+      ansible.builtin.debug:
+        msg: "command not found"
+
+- name: Erfolg oder Fehler auswerten
+  hosts: all
+
+  tasks:
+    - name: Nicht existierendes Kommando ausführen
+      ansible.builtin.shell:
+        cmd: non_existent
+      register: command_result
+      ignore_errors: true
+
+    - name: Erfolgsmeldung ausgeben
+      ansible.builtin.debug:
+        msg: "command non_existent executed successfully"
+      when: command_result.rc == 0
+
+    - name: Fehlermeldung ausgeben
+      ansible.builtin.debug:
+        msg: "command non_existent failed, cause is {{ command_result.stderr }}"
+      when: command_result.rc != 0

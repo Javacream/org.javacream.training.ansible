@@ -1,0 +1,3 @@
+---
+- name: Minimales Play
+  hosts: all

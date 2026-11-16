@@ -1,0 +1,89 @@
+services:
+  control:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.control
+    container_name: ansible-control
+    hostname: control
+    working_dir: /training
+    volumes:
+      - ./ansible:/training
+    networks:
+      - ansible-training
+    stdin_open: true
+    tty: true
+    depends_on:
+      - web1
+      - web2
+      - db1
+      - misc1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  web1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: ansible-web1
+    hostname: web1
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    networks:
+      - ansible-training
+
+  web2:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: ansible-web2
+    hostname: web2
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    networks:
+      - ansible-training
+
+  db1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: ansible-db1
+    hostname: db1
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    networks:
+      - ansible-training
+
+  misc1:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.node
+    container_name: ansible-misc1
+    hostname: misc1
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    networks:
+      - ansible-training
+
+networks:
+  ansible-training:
+    name: ansible-training

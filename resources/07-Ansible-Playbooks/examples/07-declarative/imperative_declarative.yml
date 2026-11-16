@@ -1,0 +1,17 @@
+---
+- name: Verzeichnis imperativ anlegen
+  hosts: all
+
+  tasks:
+    - name: mkdir ausführen
+      ansible.builtin.command:
+        cmd: mkdir /tmp/demo
+
+- name: Verzeichnis deklarativ anlegen
+  hosts: all
+
+  tasks:
+    - name: Verzeichnis soll existieren
+      ansible.builtin.file:
+        path: /tmp/demo
+        state: directory

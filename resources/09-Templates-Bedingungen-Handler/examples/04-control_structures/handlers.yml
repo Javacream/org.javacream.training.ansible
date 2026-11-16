@@ -1,0 +1,16 @@
+---
+- name: Handler verwenden
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Konfigurationsdatei kopieren
+      ansible.builtin.copy:
+        content: "example configuration\n"
+        dest: /tmp/example.conf
+      notify: Konfiguration neu laden
+
+  handlers:
+    - name: Konfiguration neu laden
+      ansible.builtin.debug:
+        msg: "Die Konfiguration wurde geändert und der Handler wird ausgeführt"
