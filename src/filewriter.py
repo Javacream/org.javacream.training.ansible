@@ -2,3 +2,4 @@
 content = "Hello from Püthon"
 out_file = open('data/output.txt', 'wt', encoding='utf-8')
 out_file.write(content)
+out_file.close()
