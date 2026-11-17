@@ -6,7 +6,7 @@ for description in service_descriptions:
     if description.strip() != '':
         service_info = description.split(',')
         service_name = service_info[0]
-        service_id_address = service_info[1]
+        service_ip_address = service_info[1]
         service_port = int(service_info[2])
-    service_dictionary[service_name] = (service_id_address, service_port)
+    service_dictionary[service_name] = (service_ip_address, service_port)
 print(service_dictionary)    
