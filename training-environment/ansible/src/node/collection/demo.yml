@@ -1,0 +1,12 @@
+---
+- name: Collection-Modul testen
+  hosts: webservers
+  gather_facts: false
+  tasks:
+    - name: Node Executor ausführen
+      javacream.training.node_executor:
+      register: node_result
+
+    - name: Ergebnis anzeigen
+      ansible.builtin.debug:
+        var: node_result

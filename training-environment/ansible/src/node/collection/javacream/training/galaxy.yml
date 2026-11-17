@@ -1,0 +1,14 @@
+namespace: javacream
+name: training
+version: 1.0.0
+readme: README.md
+authors:
+  - Dr. Rainer Sawitzki
+description: Ansible Collection mit einem Python-Demomodul
+license:
+  - MIT
+tags:
+  - training
+  - demo
+dependencies: {}
+repository: https://github.com/Javacream/org.javacream.training.ansible
