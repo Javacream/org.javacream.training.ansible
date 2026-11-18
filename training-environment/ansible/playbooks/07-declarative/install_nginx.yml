@@ -1,6 +1,6 @@
 ---
 - name: Bestimmte Version von nginx installieren
-  hosts: all
+  hosts: webservers
   become: true
 
   vars_files:
