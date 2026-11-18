@@ -1,0 +1,24 @@
+---
+- name: Mathematische Operationen mit Variablen
+  hosts: all
+
+  vars:
+    number1: 10
+    number2: 5
+
+  tasks:
+    - name: Addition
+      ansible.builtin.debug:
+        msg: "{{ number1 + number2 }}"
+
+    - name: Subtraktion
+      ansible.builtin.debug:
+        msg: "{{ number1 - number2 }}"
+
+    - name: Multiplikation
+      ansible.builtin.debug:
+        msg: "{{ number1 * number2 }}"
+
+    - name: Division
+      ansible.builtin.debug:
+        msg: "{{ number1 / number2 }}"

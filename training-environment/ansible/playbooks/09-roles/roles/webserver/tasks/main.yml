@@ -1,0 +1,16 @@
+---
+- name: nginx installieren
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Konfiguration erzeugen
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/ansible-demo.conf
+  notify: nginx neu starten
+
+- name: nginx starten
+  ansible.builtin.service:
+    name: nginx
+    state: started

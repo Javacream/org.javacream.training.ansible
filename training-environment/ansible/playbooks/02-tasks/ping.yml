@@ -1,0 +1,7 @@
+---
+- name: Verbindung zu db1 prüfen
+  hosts: db1
+
+  tasks:
+    - name: Verbindung testen
+      ansible.builtin.ping:
